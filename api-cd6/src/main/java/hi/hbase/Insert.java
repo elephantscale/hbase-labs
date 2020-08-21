@@ -3,11 +3,16 @@ package hi.hbase;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.hbase.client.Table;
+import org.apache.hadoop.hbase.TableName;
 
 /*
  * before running this, create 'MYNAME_users' table 
@@ -24,7 +29,7 @@ public class Insert {
 
 	public static void main(String[] args) throws Exception {
 		Configuration config = HBaseConfiguration.create();
-		HTable htable = new HTable(config, tableName);
+		Table htable = ConnectionFactory.createConnection(config ).getTable(TableName.valueOf(tableName));
 
 		int numUsers = 0;
 
@@ -32,7 +37,7 @@ public class Insert {
 		{
 			byte[] key1 = Bytes.toBytes("user1");
 			Put put1 = new Put(key1);
-			put1.add(Bytes.toBytes("info"), Bytes.toBytes("email"),
+			put1.addColumn(Bytes.toBytes("info"), Bytes.toBytes("email"),
 					Bytes.toBytes("user1@gmail.com"));
 			/// TODO 2 : now add phone number as a coulumn
 			// put1.add(???, ???, ???);
@@ -68,9 +73,9 @@ public class Insert {
 
 			byte[] key = Bytes.toBytes(userid);
 			Put put = new Put(key);
-			put.add(Bytes.toBytes("info"), Bytes.toBytes("email"),
+			put.addColumn(Bytes.toBytes("info"), Bytes.toBytes("email"),
 					Bytes.toBytes(email));
-			put.add(Bytes.toBytes("info"), Bytes.toBytes("phone"),
+			put.addColumn(Bytes.toBytes("info"), Bytes.toBytes("phone"),
 					Bytes.toBytes(phone));
 
 			/// TODO : add the new put into the list

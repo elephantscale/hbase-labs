@@ -21,7 +21,7 @@ public class Connect {
     //HTable htable = new HTable(config, "MYNAME_users");     // TODO : change table name
     //System.out.println ("### connected to " + htable.getTableDescriptor().getNameAsString());
     //htable.close();
-    Table hbaseTable = ConnectionFactory.createConnection(config ).getTable(TableName.valueOf("gennady_users"));
+    Table hbaseTable = ConnectionFactory.createConnection(config ).getTable(TableName.valueOf("MYNAME_users"));
     System.out.println(String.format("Table name %s", hbaseTable.getTableDescriptor().getNameAsString()));
     hbaseTable.close();
   }
